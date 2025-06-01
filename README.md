@@ -21,8 +21,8 @@ Special emphasis is placed on code security and robust exception handling.
 
 1) **Factory**
 
-**Implementation**: The `PlantNursery` class handles the creation of various types of inventory items that the store would later sell.
-**Usage**: The overloaded method `spawn()` is used to decide which specific `SellableItem` (`Plant`, `Tree`, or `Bouquet`) to instantiate and return.
+    - **Implementation**: The `PlantNursery` class handles the creation of various types of inventory items that the store would later sell.
+    - **Usage**: The overloaded method `spawn()` is used to decide which specific `SellableItem` (`Plant`, `Tree`, or `Bouquet`) to instantiate and return.
 
 2) **Composite** 
 **Implementation**: `Bouquet` instances are built using the Composite pattern. 
