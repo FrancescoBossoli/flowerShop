@@ -1,6 +1,7 @@
 package com.epicode.flowershop.core;
 
 import com.epicode.flowershop.interfaces.StockField;
+import com.epicode.flowershop.models.Bouquet;
 import com.epicode.flowershop.models.SellableItem;
 import com.epicode.flowershop.utilities.CustomLogger;
 import com.epicode.flowershop.utilities.UniversalLogger;
@@ -8,13 +9,14 @@ import com.epicode.flowershop.utilities.UniversalLogger;
 import java.lang.reflect.Field;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Inventory {
     private static Inventory instance;
     private static final CustomLogger logger = UniversalLogger.getInstance().getGlobalLogger();
+    private Inventory() {}
 
     @StockField
     private final Map<SellableItem, Integer> stockMap = new HashMap<>();
@@ -69,12 +71,6 @@ public class Inventory {
         stockMap.entrySet().stream()
             .sorted(Map.Entry.comparingByKey(Comparator.comparing(SellableItem::getName)))
             .forEach(entry -> System.out.println(entry.getKey().getName() + " - Qty: " + entry.getValue()));
-        try {
-            TimeUnit.SECONDS.sleep(2);
-            System.out.println("\n");
-        } catch (InterruptedException e) {
-            logger.error("The thread was interrupted during the 2 seconds timeout");
-        }
     }
 
     public void printSellingPrices() {
@@ -89,6 +85,13 @@ public class Inventory {
             .forEach(entry -> System.out.println(i.getAndIncrement() + " - " + entry.getKey().getName() + " - " + entry.getKey().getPrice() + "€"));
     }
 
-
+    public List<Bouquet> getAvailableBouquetList() {
+        return stockMap.keySet().stream()
+            .filter(item -> item.getName()
+            .toLowerCase()
+            .contains("bouquet"))
+            .map(item -> (Bouquet) item)
+            .toList();
+    }
 }
 

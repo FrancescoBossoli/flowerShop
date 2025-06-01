@@ -7,6 +7,6 @@ public class CompactDescriptionStrategy implements DescriptionStrategy {
 
     @Override
     public String describe(Bouquet bouquet) {
-        return bouquet.getName() + " - Total items: " + bouquet.getElements().size();
+        return bouquet.getName() + " - Total items included: " + bouquet.getElements().size();
     }
 }

@@ -11,6 +11,7 @@ import com.epicode.flowershop.utilities.CustomLogger;
 import com.epicode.flowershop.utilities.UniversalLogger;
 
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class ApplicationMenu {
     private static ApplicationMenu instance;
@@ -35,6 +36,14 @@ public class ApplicationMenu {
         return instance;
     }
 
+    public Shop getShop() {
+        return shop;
+    }
+
+    public CartService getCartService() {
+        return cartService;
+    }
+
     public void startEmulationSystem() {
         inventoryService.inventoryRandomRefill();
         boolean isRunning = true;
@@ -46,7 +55,10 @@ public class ApplicationMenu {
                     case 1:
                         printStockMenu();
                         break;
-                    case 2: {
+                    case 2:
+                        printBouquetCompositionMenu();
+                        break;
+                    case 3: {
                         boolean onAddToCartMenu = true;
                         while (onAddToCartMenu) {
                             printBuyMenu();
@@ -60,13 +72,13 @@ public class ApplicationMenu {
                         }
                         break;
                     }
-                    case 3: {
+                    case 4: {
                         printCartList();
                         System.out.println("\nInsert any key to return to the main menu \n");
                         scanner.nextLine();
                         break;
                     }
-                    case 4: {
+                    case 5: {
                         checkOut();
                         break;
                     }
@@ -94,13 +106,24 @@ public class ApplicationMenu {
             Flower Shop Emulation System
             -------------------------------------------------
             1) Print the Shop Inventory Goods
-            2) Add Items to Cart
-            3) View the Items currently in the Cart
-            4) Proceed to Checkout
+            2) Examine bouquet compositions
+            3) Add Items to Cart
+            4) View the Items currently in the Cart
+            5) Proceed to Checkout
             
             0) Close the Application
             
             """ );
+    }
+
+    public void printBouquetCompositionMenu() {
+        System.out.print("""
+            -------------------------------------------------
+            Our Bouquet Compositions
+            -------------------------------------------------
+            """);
+        inventoryService.getAvailableBouquetList();
+        getDelay();
     }
 
     public void printBuyMenu() {
@@ -119,6 +142,7 @@ public class ApplicationMenu {
             -------------------------------------------------
             """);
         inventoryService.retrieveStockItemList();
+        getDelay();
     }
 
     public void printCartList() {
@@ -132,5 +156,14 @@ public class ApplicationMenu {
 
     public void checkOut() {
         cartService.checkout();
+    }
+
+    public void getDelay() {
+        try {
+            TimeUnit.SECONDS.sleep(2);
+            System.out.println("\n");
+        } catch (InterruptedException e) {
+            logger.error("The thread was interrupted during the 2 seconds timeout");
+        }
     }
 }

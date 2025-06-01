@@ -4,7 +4,10 @@ import com.epicode.flowershop.core.Inventory;
 import com.epicode.flowershop.enums.Size;
 import com.epicode.flowershop.exceptions.UnrecognizedBouquetSizeException;
 import com.epicode.flowershop.exceptions.UnrecognizedItemCreationRequestException;
+import com.epicode.flowershop.models.Bouquet;
 import com.epicode.flowershop.models.SellableItem;
+import com.epicode.flowershop.strategies.CompactDescriptionStrategy;
+import com.epicode.flowershop.strategies.SpecificDescriptionStrategy;
 import com.epicode.flowershop.utilities.CustomLogger;
 import com.epicode.flowershop.utilities.PlantNursery;
 import com.epicode.flowershop.utilities.UniversalLogger;
@@ -14,6 +17,7 @@ import java.util.stream.Stream;
 
 public class InventoryService {
     private static InventoryService instance;
+    private InventoryService() {}
     public static synchronized InventoryService getInstance() {
         if (instance == null) instance = new InventoryService();
         return instance;
@@ -81,6 +85,17 @@ public class InventoryService {
 
     public void retrieveStockItemList() {
         inventory.printStockItemList();
+    }
+
+    public void getAvailableBouquetList() {
+        List<Bouquet> list= inventory.getAvailableBouquetList();
+        list.forEach(item -> {
+            item.listElements();
+            item.setDescriptionStrategy(new CompactDescriptionStrategy());
+            item.listElements();
+            item.setDescriptionStrategy(new SpecificDescriptionStrategy());
+            System.out.println("--------------------------------------------------");
+        });
     }
 
 }

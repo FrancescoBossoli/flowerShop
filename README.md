@@ -59,3 +59,72 @@ Special emphasis is placed on code security and robust exception handling.
 5) **JUnit Testing**
 **Implementation**: Some unit tests are present, in particular to analyze the correct functioning of the `PlantNursery` creation methods.
 **Example**: Tests check if inputs are correctly sanitized and the correct creation of instances based on such inputs. They also test if the correct exceptions are launched.
+
+---
+
+### **Security Requirements**
+
+All the requirements have been satisfied: Exceptions are correctly managed, no private data is hardcoded, user input is sanitized or properly watched.
+
+---
+
+## 🥇 Optional Advanced Features
+
+### **Design Patterns**
+
+1) **Singleton (2 pts)**
+**Implementation**: Various classes are designed as singleton, to ensure that only one instance of them can be created. They have a private constructor that is used only in case the instance is not already been created
+**Example**: `ApplicationMenu`, `Inventory`, `InventoryService` and `UniversalLogger` were created using this pattern.
+
+2) **Strategy (4 pts)**
+**Implementation**: A DescriptionStrategy is used to make a bouquet description interchangeable through switching to the preferred strategy.
+**Example**: `CompactDescriptionStrategy` and `SpecificDescriptionStrategy ` are used to retrieve different information of the same instance.
+
+3) **Chain of Responsibility (4 pts)**
+**Implementation**: This pattern has been implemented for discount management purposes.
+**Example**: The abstract class `DiscountHandler` defines the `setNext()` and `applyDiscount()` methods, and roughly defines the `handle()` method that will be used by `RegularPaymentHandler`, `BulkDiscountHandler`, and `BigOrderDiscountHandler` classes, each in its own way if the requirement is respected. The `handle()` method is made with the intent of finding the proper handler to satisfy each case.
+
+4) **Template Method (3 pts)**
+**Implementation**: The `Shop` abstract class contains the `checkout()` method (template) that represents the root of an item removal algorithm, but delegates the implementation of some steps to subclasses.
+**Example**: `FlowerShop` is the concrete class that defines the `calculateTotal()` method, providing the specific logic that is needed to complete the method required steps, it's a customized implementation that doesn't alter the main structure of the algorithm.
+
+---
+
+### **Advanced Technologies**
+
+1) **Stream API & Lambdas (5 pts)**
+**Implementation**: The use of the `Stream API & Lambdas` are used in various parts of the code, to provide a fluent and functional-style way to process collections of data.
+**Example**: They are used to convert a map keyset into an ordered list, to execute a method for each element of the Stream, to dynamically construct a string representing an instance's properties, and so on...
+
+2) **Reflection (4 pts)**
+**Implementation**: It is used to programmatically find and inspect the `stockMap` field based on its annotation. 
+**Example**: In the `Inventory` class, reflection is applied within the `logStockStatus()` method through the use of the custom annotation `@Stockfield`. 
+
+3) **Custom Annotations (2 pts)**
+**Implementation**: The aforementioned `@Stockfield` custom annotation is implemented to mark a field that needs to be accessible. 
+**Example**: Its use is needed to notify the user if an item actually has a low stock. 
+
+4) **Inversion of Control (5 pts)**
+**Implementation**: The `IoC` is implemented throughout the application with the use of the `Service Locator` pattern, a form of `IoC` less flexible than the `Dependency Injection`. Also it's correctly applied with the `FlowerShop` and `CartService` creation and management in the `ApplicationMenu` class.
+**Example**: The use of `Singletons` with `getInstance()` methods is a form of `Service Locator` pattern, actually used in all the singleton aforementioned classes (`ApplicationMenu`, `Inventory`, `InventoryService` and `UniversalLogger`). Also IoC is expressed in `ApplicationMenu`, that constructs a `Shop` and a `CartService` entities it its constructor, passing them their own dependencies while constructing them. 
+
+---
+
+## 🔨 Setup
+
+### **Requisites**
+- **Java SE 21+**
+
+---
+
+## 📖 UML Diagrams
+
+### Class Architecture
+![UML DIAGRAM](project.png "Class Architecture")
+
+---
+### Item Creation Structure
+![UML DIAGRAM](item_creation.png "Item Creation Structure")
+
+#
+

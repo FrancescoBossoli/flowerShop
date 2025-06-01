@@ -3,5 +3,5 @@ package com.epicode.flowershop.interfaces;
 import com.epicode.flowershop.models.Bouquet;
 
 public interface DescriptionStrategy {
-    public String describe(Bouquet bouquet);
+    String describe(Bouquet bouquet);
 }
