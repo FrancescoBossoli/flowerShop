@@ -19,8 +19,7 @@ Special emphasis is placed on code security and robust exception handling.
 
 ### **Mandatory Design Patterns (16 points)**
 
-1) **Factory**
-
+1. **Factory**
     - **Implementation**: The `PlantNursery` class handles the creation of various types of inventory items that the store would later sell.
     - **Usage**: The overloaded method `spawn()` is used to decide which specific `SellableItem` (`Plant`, `Tree`, or `Bouquet`) to instantiate and return.
 
