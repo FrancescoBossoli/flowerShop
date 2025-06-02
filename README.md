@@ -79,11 +79,15 @@ All the requirements have been satisfied: Exceptions are correctly managed, no p
     - **Implementation**: A DescriptionStrategy is used to make a bouquet description interchangeable through switching to the preferred strategy.
     - **Example**: `CompactDescriptionStrategy` and `SpecificDescriptionStrategy ` are used to retrieve different information of the same instance.
 
-3. **Chain of Responsibility (4 pts)**
+3. **Observer (5 pts)**
+    - **Implementation**: When the `Shop` instance is created a `CartObserver` is assigned to it to monitor selling activities. 
+    - **Example**: Every time the `checkout()` method gets called the `ReceiptWriter` gets notified and proceeds printing the related receipt.
+
+4. **Chain of Responsibility (4 pts)**
     - **Implementation**: This pattern has been implemented for discount management purposes.
     - **Example**: The abstract class `DiscountHandler` defines the `setNext()` and `applyDiscount()` methods, and roughly defines the `handle()` method that will be used by `RegularPaymentHandler`, `BulkDiscountHandler`, and `BigOrderDiscountHandler` classes, each in its own way if the requirement is respected. The `handle()` method is made with the intent of finding the proper handler to satisfy each case.
 
-4. **Template Method (3 pts)**
+5. **Template Method (3 pts)**
     - **Implementation**: The `Shop` abstract class contains the `checkout()` method (template) that represents the root of an item removal algorithm, but delegates the implementation of some steps to subclasses.
     - **Example**: `FlowerShop` is the concrete class that defines the `calculateTotal()` method, providing the specific logic that is needed to complete the method required steps, it's a customized implementation that doesn't alter the main structure of the algorithm.
 
