@@ -1,7 +1,9 @@
 package com.epicode.flowershop.interfaces;
 
-import com.epicode.flowershop.core.Cart;
+import com.epicode.flowershop.models.SellableItem;
+
+import java.util.List;
 
 public interface CartObserver {
-    void onCheckout(Cart cart);
+    void onCheckout(List<SellableItem> list);
 }

@@ -105,7 +105,7 @@ All the requirements have been satisfied: Exceptions are correctly managed, no p
 
 4. **Inversion of Control (5 pts)**
     - **Implementation**: The `IoC` is implemented throughout the application with the use of the `Service Locator` pattern, a form of `IoC` less flexible than the `Dependency Injection`. Also it's correctly applied with the `FlowerShop` and `CartService` creation and management in the `ApplicationMenu` class.
-    - **Example**: The use of `Singletons` with `getInstance()` methods is a form of `Service Locator` pattern, actually used in all the singleton aforementioned classes (`ApplicationMenu`, `Inventory`, `InventoryService` and `UniversalLogger`). Also IoC is expressed in `ApplicationMenu`, that constructs a `Shop` and a `CartService` entities it its constructor, passing them their own dependencies while constructing them. 
+    - **Example**: The use of `Singletons` with `getInstance()` methods is a form of `Service Locator` pattern, actually used in all the singleton aforementioned classes (`ApplicationMenu`, `Inventory`, `InventoryService` and `UniversalLogger`). Also IoC is expressed in `ApplicationMenu`, that constructs a `Shop` and a `CartService` entities in its constructor, passing them their own dependencies while constructing them. 
 
 ---
 

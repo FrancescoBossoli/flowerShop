@@ -24,16 +24,18 @@ public abstract class Shop {
     public final void checkout(Cart cart) {
         Iterator<SellableItem> iterator = cart.getIterator();
         int items = 0;
+        List<SellableItem> list = new ArrayList<>();
         while (iterator.hasNext()) {
             items++;
-            iterator.next();
+            list.add(iterator.next());
         }
-        double total;
-        total = calculateTotal(cart);
-        System.out.println("In total you paid " + total + "€");
-        if (items > 2) System.out.println("You received a " + (items > 7 ? 10 : 5) + "% of discount since you had " + items + " items in your cart");
-
-        observers.forEach(obs -> obs.onCheckout(cart));
+        if (items == 0) System.out.println("The Cart is Empty");
+        else {
+            observers.forEach(obs -> obs.onCheckout(list));
+            double total = calculateTotal(cart);
+            System.out.println("In total you paid " + String.format("%.2f", total) + "€");
+            if (items > 2) System.out.println("You received a " + (items > 7 ? 10 : 5) + "% of discount since you had " + items + " items in your cart");
+        }
     }
 
     protected abstract double calculateTotal(Cart cart);

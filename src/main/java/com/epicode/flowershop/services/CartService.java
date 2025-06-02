@@ -49,8 +49,22 @@ public class CartService {
             System.out.println(listedItem.getName() + " - " + listedItem.getPrice() + "€");
         }
     }
+
+    public void printCartRemovalList() {
+        Iterator<SellableItem> iterator = cart.getIterator();
+        int counter = 1;
+        while (iterator.hasNext()) {
+            SellableItem listedItem = iterator.next();
+            System.out.println(counter++ + " " + listedItem.getName() + " - " + listedItem.getPrice() + "€");
+        }
+    }
+
     public void checkout() {
         shop.checkout(cart);
         cart.clear();
+    }
+
+    public boolean isEmpty() {
+        return cart.isEmpty();
     }
 }

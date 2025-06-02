@@ -8,6 +8,7 @@ import com.epicode.flowershop.services.CartService;
 import com.epicode.flowershop.services.InventoryService;
 import com.epicode.flowershop.templates.Shop;
 import com.epicode.flowershop.utilities.CustomLogger;
+import com.epicode.flowershop.utilities.ReceiptWriter;
 import com.epicode.flowershop.utilities.UniversalLogger;
 
 import java.util.Scanner;
@@ -28,6 +29,7 @@ public class ApplicationMenu {
         handler1.setNext(handler2);
         handler2.setNext(handler3);
         shop = new FlowerShop(inventoryService.getInventory(), handler1);
+        shop.addObserver(new ReceiptWriter());
         cartService = CartService.getInstance(shop, new Cart(), inventoryService, logger);
     }
 
@@ -63,9 +65,9 @@ public class ApplicationMenu {
                         while (onAddToCartMenu) {
                             printBuyMenu();
                             try {
-                                int addToCartMenuChoice = Integer.parseInt(scanner.nextLine());
-                                if (addToCartMenuChoice == 0) onAddToCartMenu = false;
-                                else cartService.addItem(inventoryService.pickItem(addToCartMenuChoice));
+                                int choice = Integer.parseInt(scanner.nextLine());
+                                if (choice == 0) onAddToCartMenu = false;
+                                else cartService.addItem(inventoryService.pickItem(choice));
                             } catch (NumberFormatException | IndexOutOfBoundsException e) {
                                 System.out.println("Your choice must be expressed using valid integer inputs \n");
                             }
@@ -73,13 +75,31 @@ public class ApplicationMenu {
                         break;
                     }
                     case 4: {
-                        printCartList();
-                        System.out.println("\nInsert any key to return to the main menu \n");
-                        scanner.nextLine();
+                        if (cartService.isEmpty()) {
+                            System.out.println("The Cart is Empty");
+                            getDelay();
+                        } else {
+                            boolean onRemoveFromCartMenu = true;
+                            while (onRemoveFromCartMenu) {
+                                printCartItemRemovalMenu();
+                                try {
+                                    int choice = Integer.parseInt(scanner.nextLine());
+                                    if (choice == 0) onRemoveFromCartMenu = false;
+                                    else cartService.removeItem(inventoryService.pickItem(choice));
+                                } catch (NumberFormatException | IndexOutOfBoundsException e) {
+                                    System.out.println("Your choice must be expressed using valid integer inputs \n");
+                                }
+                            }
+                        }
                         break;
                     }
                     case 5: {
-                        checkOut();
+                        printCartList();
+                        getDelay();
+                        break;
+                    }
+                    case 6: {
+                        cartService.checkout();
                         break;
                     }
 
@@ -101,15 +121,14 @@ public class ApplicationMenu {
     }
 
     public void printMainMenu() {
-        System.out.print("""
-            -------------------------------------------------
-            Flower Shop Emulation System
-            -------------------------------------------------
+        printMenuHeading("Flower Shop Emulation System");
+        System.out.print("""            
             1) Print the Shop Inventory Goods
             2) Examine bouquet compositions
             3) Add Items to Cart
-            4) View the Items currently in the Cart
-            5) Proceed to Checkout
+            4) Remove Items from Cart
+            5) View the Items currently in the Cart
+            6) Proceed to Checkout
             
             0) Close the Application
             
@@ -117,11 +136,7 @@ public class ApplicationMenu {
     }
 
     public void printBouquetCompositionMenu() {
-        System.out.print("""
-            -------------------------------------------------
-            Our Bouquet Compositions
-            -------------------------------------------------
-            """);
+        printMenuHeading("Our Bouquet Compositions");
         inventoryService.getAvailableBouquetList();
         getDelay();
     }
@@ -129,33 +144,37 @@ public class ApplicationMenu {
     public void printBuyMenu() {
         inventoryService.retrieveSellingPrices();
         System.out.print("""
-            \n0  - Return to main menu
+            \nSelect the Item you'd like to buy
             -------------------------------------------------
-            Select the Item you'd like to buy \n
+            Press 0 to return to the main menu \n
             """);
     }
 
     public void printStockMenu() {
-        System.out.print("""
-            -------------------------------------------------
-            Inventory Available Goods
-            -------------------------------------------------
-            """);
+        printMenuHeading("Inventory Available Goods");
         inventoryService.retrieveStockItemList();
         getDelay();
     }
 
-    public void printCartList() {
+    public void printCartItemRemovalMenu() {
+        printMenuHeading("Cart's Content");
+        cartService.printCartRemovalList();
         System.out.print("""
+            \nWhich item do you wish to remove from the cart?
             -------------------------------------------------
-            Cart's Content
-            -------------------------------------------------
+            Press 0 to return to the main menu \n
             """);
+    }
+
+    public void printCartList() {
+        printMenuHeading("Cart's Content");
         cartService.printCartContent();
     }
 
-    public void checkOut() {
-        cartService.checkout();
+    public void printMenuHeading(String content) {
+        System.out.println("-------------------------------------------------");
+        System.out.println(content);
+        System.out.println("-------------------------------------------------");
     }
 
     public void getDelay() {
