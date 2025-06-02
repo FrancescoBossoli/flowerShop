@@ -129,5 +129,25 @@ All the requirements have been satisfied: Exceptions are correctly managed, no p
 ### Item Creation Structure
 ![UML DIAGRAM](item_creation.png "Item Creation Structure")
 
-#
+---
+
+## 📌 Known Limitations
+
+1. **Limited Testing Suite**  
+    The provided testing suite doesn't cover the totality of the application
+
+2. **Limited UX**
+    While the various classes and methods that compose the application have a wide variety of use, the actual interaction that a user can have is voluntarily limited to some predefined actions that enable only an emulated customer experience.
+
+---
+
+## 👍 Possible Improvements
+
+1. The project can be upgraded into a back-end application, to store data on a database and communicate with a front-end of some sort. This can be achievable with the implementation of a framework like Spring Boot.
+
+2. The owner-related areas of interaction can be improved.
+
+3. The application can be made to interact with different users concurrently, storing data of the individual interactions.
+
+---
 
